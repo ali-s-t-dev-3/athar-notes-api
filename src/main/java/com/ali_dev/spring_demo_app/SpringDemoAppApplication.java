@@ -11,11 +11,11 @@ import java.nio.charset.StandardCharsets;
 public class SpringDemoAppApplication {
 
 	public static void main(String[] args) {
-		configureRenderDatabase();
+		configureHostedDatabase();
 		SpringApplication.run(SpringDemoAppApplication.class, args);
 	}
 
-	private static void configureRenderDatabase() {
+	private static void configureHostedDatabase() {
 		String databaseUrl = System.getenv("DATABASE_URL");
 		if (databaseUrl == null || databaseUrl.isBlank()) {
 			return;
@@ -24,9 +24,10 @@ public class SpringDemoAppApplication {
 		URI uri = URI.create(databaseUrl);
 		String[] credentials = uri.getUserInfo().split(":", 2);
 		int port = uri.getPort() == -1 ? 5432 : uri.getPort();
+		String query = uri.getQuery() == null ? "" : "?" + uri.getQuery();
 
 		System.setProperty("spring.datasource.url",
-				"jdbc:postgresql://" + uri.getHost() + ":" + port + uri.getPath());
+				"jdbc:postgresql://" + uri.getHost() + ":" + port + uri.getPath() + query);
 		System.setProperty("spring.datasource.username", decode(credentials[0]));
 		System.setProperty("spring.datasource.password", decode(credentials[1]));
 	}

@@ -7,14 +7,4 @@ services:
     healthCheckPath: /note
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: athar-notes-db
-          property: connectionString
-
-databases:
-  - name: athar-notes-db
-    plan: free
-    region: frankfurt
-    postgresMajorVersion: "17"
-    databaseName: athar_notes
-    user: athar_notes_user
+        sync: false
