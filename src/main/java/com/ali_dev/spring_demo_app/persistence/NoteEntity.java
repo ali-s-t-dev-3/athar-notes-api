@@ -16,6 +16,7 @@ public class NoteEntity {
     @Column(columnDefinition = "TEXT")
     private String section2;
 
+    @Column(nullable = false, unique = true)
     private Integer page;
 
     public NoteEntity() {
