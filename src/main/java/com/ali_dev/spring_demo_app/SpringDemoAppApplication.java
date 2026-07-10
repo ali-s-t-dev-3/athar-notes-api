@@ -24,7 +24,7 @@ public class SpringDemoAppApplication {
 		URI uri = URI.create(databaseUrl);
 		String[] credentials = uri.getUserInfo().split(":", 2);
 		int port = uri.getPort() == -1 ? 5432 : uri.getPort();
-		String query = uri.getQuery() == null ? "" : "?" + uri.getQuery();
+		String query = databaseUrl.contains("sslmode=require") ? "?sslmode=require" : "";
 
 		System.setProperty("spring.datasource.url",
 				"jdbc:postgresql://" + uri.getHost() + ":" + port + uri.getPath() + query);
